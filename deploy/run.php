@@ -1,3 +1,3 @@
 <?php
-    echo exec('git pr');
+    echo exec('cd .. && git pull --rebase');
 ?>
