@@ -1,5 +1,6 @@
 <?php
-    echo '<h3>Upgrade on the way...</h3>';
-    echo exec('cd .. && git pull --rebase');
-    echo '<h1>Running latest Desvaloriza version.</h1>';
+    $output = '<h3>Upgrade on the way...</h3>';
+    $output . exec('cd .. && git pull --rebase');
+    $output . '<h1>Running latest Desvaloriza version.</h1>';
+    echo $output;
 ?>
