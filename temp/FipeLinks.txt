@@ -1,0 +1,25 @@
+A idéia é consultar um webservice já existente ou criar o nosso?
+
+Não achei nada existente. Teríamos que fazer o famoso web scraping. Aí o buraco é mais embaixo.
+
+Achei o seguinte: 
+
+3 APIs da FIPe:
+
+API de Consulta Tabela FIPE
+http://fipeapi.appspot.com/
+
+Exemplo:
+http://fipeapi.appspot.com/api/1/[tipo]/[acao]/[parametros].json
+http://fipeapi.appspot.com/api/1/carros/marcas.json
+http://fipeapi.appspot.com/api/1/carros/veiculos/44.json
+http://fipeapi.appspot.com/api/1/carros/veiculos/44/6304.json
+http://fipeapi.appspot.com/api/1/carros/veiculo/44/6304/2014-1.json
+
+FIPE HTTP REST
+http://deividfortuna.github.io/fipe/
+
+Webservice com os preços de automóveis da FIPE:
+http://www.profissionaisdaweb.com.br/webservice-api-com-os-precos-de-automoveis-da-fipe-43.jsp
+
+Thiago.
