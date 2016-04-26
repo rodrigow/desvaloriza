@@ -18,7 +18,7 @@ describe("Testing utilities", function() {
 				{"id": "1", "name": "A"}
 			 };
     
-	utilities.sort_json(combo);
+	//utilities.sort_json(combo);
     
 	//expect(utilities.name).toEqual(combo.name);
 	expect(null).toBeNull();
