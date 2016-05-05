@@ -22,7 +22,7 @@ DESVALORIZA.makers = {
     fipe_url: 'http://fipeapi.appspot.com/api/1/carros/marcas.json',
 
 
-    install_makers: function () {
+    install: function () {
         $.getJSON(DESVALORIZA.makers.fipe_url)
             .done(function (data) {
 
@@ -40,5 +40,7 @@ DESVALORIZA.makers = {
 };
 
 $(document).ready(function () {
-    DESVALORIZA.makers.install_makers();
+    DESVALORIZA.makers.install();
+    
+    DESVALORIZA.google.send_analytics();
 });
