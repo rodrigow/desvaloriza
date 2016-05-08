@@ -13,13 +13,12 @@ describe("A test harness suite", function() {
 	c = 'C';
 	d = 'D';
     
-	combo = {[
+	combo = {"combo":[
 				{"id": "4", "name": "D"},
 				{"id": "2", "name": "B"},
 				{"id": "3", "name": "C"},
 				{"id": "1", "name": "A"}
-			 ]};
-	
+			]}
     
 	//utilities.sort_json(combo);
 	
