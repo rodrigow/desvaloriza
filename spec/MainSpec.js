@@ -5,9 +5,9 @@ describe("A suite", function() {
   
   var utilities;
   
-  beforeEach(function() {
-    utilities = DESVALORIZA.utilities;
-  });
+  //beforeEach(function() {
+  //  utilities = DESVALORIZA.utilities;
+  //});
 
   it("should be able to sort the combo", function() {
 	a = 'A';
