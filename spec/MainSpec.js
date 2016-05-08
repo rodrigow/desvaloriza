@@ -3,11 +3,12 @@ describe("A suite", function() {
     expect(true).toBe(true);
   });
   
-  var utilities;
+  var main;
   
-  //beforeEach(function() {
-  //  utilities = DESVALORIZA.utilities;
-  //});
+  beforeEach(function() {
+    //utilities = DESVALORIZA.utilities;
+	main = new Main();
+  });
 
   it("should be able to sort the combo", function() {
 	a = 'A';
