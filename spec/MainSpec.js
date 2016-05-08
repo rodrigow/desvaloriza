@@ -24,8 +24,7 @@ describe("A suite", function() {
     
 	//expect(utilities.name).toEqual(combo.name);
 	expect(null).toBeNull();
-    expect(a).toBeNull();
-    expect(foo).not.toBeNull();
+    expect(a).not.toBeNull();
 	expect(b).toMatch("B");
 
   });
