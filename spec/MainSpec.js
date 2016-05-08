@@ -12,7 +12,11 @@ describe("A test harness suite", function() {
 	b = 'B';
 	c = 'C';
 	d = 'D';
-    expect(true).toBe(true);
+    
+	//expect(utilities.name).toEqual(combo.name);
+	expect(null).toBeNull();    
+    expect(a).not.toBeNull();
+	expect(b).toMatch("B");
   });
   
   it("contains spec with an expectation", function() {
