@@ -2,9 +2,7 @@ describe("A suite", function() {
   it("contains spec with an expectation", function() {
     expect(true).toBe(true);
   });
-});
-
-describe("Testing utilities", function() {
+  
   var utilities;
   
   beforeEach(function() {
@@ -33,5 +31,4 @@ describe("Testing utilities", function() {
 	expect(b).toMatch("B");
 
   });
-
 });
