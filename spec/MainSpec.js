@@ -14,7 +14,8 @@ describe("A test harness suite", function() {
 	d = 'D';
     
 	//expect(utilities.name).toEqual(combo.name);
-	expect(null).toBeNull();    
+	expect(null).toBeNull(); 
+	expect(c).toBeNull(); 	
     expect(a).not.toBeNull();
 	expect(b).toMatch("B");
   });
