@@ -3,11 +3,11 @@ describe("A suite", function() {
     expect(true).toBe(true);
   });
   
-  var main;
+  var utilities;
   
   beforeEach(function() {
-    //utilities = DESVALORIZA.utilities;
-	main = new Main();
+    utilities = DESVALORIZA.utilities;
+	//main = new Main();
   });
 
   
