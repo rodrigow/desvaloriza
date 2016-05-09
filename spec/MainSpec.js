@@ -1,6 +1,6 @@
 describe("A test harness suite", function() {
  
-  var utilities;
+  //var utilities;
   
   beforeEach(function() {
     //utilities = DESVALORIZA.utilities;
