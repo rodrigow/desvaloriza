@@ -20,8 +20,8 @@ describe("A test harness suite", function() {
 				{"id": "1", "name": "A"}
 			]}
     
-	DESVALORIZA.utilities.sort_json(data);
-	
+	DESVALORIZA.utilities.sort_json(data.Marcas);
+		
 	//expect(utilities.name).toEqual(data.name);
 	//expect(null).toBeNull(); 
 	//expect(a).not.toBeNull();

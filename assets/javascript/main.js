@@ -3,11 +3,10 @@ var DESVALORIZA = DESVALORIZA || {};
 DESVALORIZA.utilities = {};
 DESVALORIZA.utilities = {
     sort_json: function (data) {
-        data.sort(function (maker_a, maker_b) {
-
-            if (maker_a.name > maker_b.name) {
+        data.sort(function (data_a, data_b) {
+            if (data_a.name > data_b.name) {
                 return 1;
-            } else if (maker_a.name < maker_b.name) {
+            } else if (data_a.name < data_b.name) {
                 return -1;
             } else {
                 return 0;
