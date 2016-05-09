@@ -27,10 +27,10 @@ describe("A test harness suite", function() {
 	//expect(a).not.toBeNull();
 	//expect(b).toMatch("B");
 	expect(data).not.toBeNull();
-	expect(data.Marcas[0]).toMatch("A");
-	expect(data.Marcas[1]).toMatch("B");
-	expect(data.Marcas[2]).toMatch("C");
-	expect(data.Marcas[3]).toMatch("D");
+	expect(data.Marcas[0].name).toMatch("A");
+	expect(data.Marcas[1].name).toMatch("B");
+	expect(data.Marcas[2].name).toMatch("C");
+	expect(data.Marcas[3].name).toMatch("D");
 	
 	
   });
