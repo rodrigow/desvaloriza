@@ -4,7 +4,7 @@ describe("A test harness suite", function() {
   
   beforeEach(function() {
     utilities = DESVALORIZA.utilities;
-	//main = new Main();
+	
   });
 
   it("Validates the combo sort.", function() {
@@ -13,25 +13,28 @@ describe("A test harness suite", function() {
 	c = 'C';
 	d = 'D';
     
-	combo = {"Marcas":[
+	data = {"Marcas":[
 				{"id": "4", "name": "D"},
 				{"id": "2", "name": "B"},
 				{"id": "3", "name": "C"},
 				{"id": "1", "name": "A"}
 			]}
     
-	//utilities.sort_json(combo);
+	utilities.sort_json(data);
 	
-	//expect(utilities.name).toEqual(combo.name);
+	//expect(utilities.name).toEqual(data.name);
 	//expect(null).toBeNull(); 
 	//expect(a).not.toBeNull();
 	//expect(b).toMatch("B");
-	expect(combo).not.toBeNull();
+	expect(data).not.toBeNull();
+	expect(data.Marcas[0]).toMatch("A");
+	expect(data.Marcas[1]).toMatch("B");
+	expect(data.Marcas[2]).toMatch("C");
+	expect(data.Marcas[3]).toMatch("D");
+	
 	
   });
   
-  it("contains spec with an expectation", function() {
-    expect(true).toBe(true);
-  });
+
   
 });
