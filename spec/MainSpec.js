@@ -13,7 +13,7 @@ describe("A test harness suite", function() {
 	c = 'C';
 	d = 'D';
     
-	combo = {"combo":[
+	combo = {"Marcas":[
 				{"id": "4", "name": "D"},
 				{"id": "2", "name": "B"},
 				{"id": "3", "name": "C"},
@@ -23,9 +23,10 @@ describe("A test harness suite", function() {
 	//utilities.sort_json(combo);
 	
 	//expect(utilities.name).toEqual(combo.name);
-	expect(null).toBeNull(); 
-	expect(a).not.toBeNull();
-	expect(b).toMatch("B");
+	//expect(null).toBeNull(); 
+	//expect(a).not.toBeNull();
+	//expect(b).toMatch("B");
+	expect(combo).not.toBeNull();
 	
   });
   
