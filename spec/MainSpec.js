@@ -3,7 +3,7 @@ describe("A test harness suite", function() {
   var utilities;
   
   beforeEach(function() {
-    utilities = DESVALORIZA.utilities;
+    //utilities = DESVALORIZA.utilities;
 	
   });
 
@@ -20,7 +20,7 @@ describe("A test harness suite", function() {
 				{"id": "1", "name": "A"}
 			]}
     
-	utilities.sort_json(data);
+	DESVALORIZA.utilities.sort_json(data);
 	
 	//expect(utilities.name).toEqual(data.name);
 	//expect(null).toBeNull(); 
