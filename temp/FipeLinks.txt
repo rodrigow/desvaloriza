@@ -13,7 +13,7 @@ Exemplo:
 http://fipeapi.appspot.com/api/1/[tipo]/[acao]/[parametros].json
 http://fipeapi.appspot.com/api/1/carros/marcas.json
 http://fipeapi.appspot.com/api/1/carros/veiculos/44.json
-http://fipeapi.appspot.com/api/1/carros/veiculos/44/6304.json
+http://fipeapi.appspot.com/api/1/carros/veiculo/44/6304.json
 http://fipeapi.appspot.com/api/1/carros/veiculo/44/6304/2014-1.json
 
 FIPE HTTP REST
