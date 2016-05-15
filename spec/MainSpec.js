@@ -4,10 +4,11 @@ describe("A test harness suite", function() {
   
   beforeEach(function() {
     //utilities = DESVALORIZA.utilities;
+	//DESVALORIZA.makers.install();
 	
   });
 
-  it("Validates the combo sort.", function() {
+  xit("Validates the combo sort.", function() {
 	a = 'A';
 	b = 'B';
 	c = 'C';
@@ -22,19 +23,35 @@ describe("A test harness suite", function() {
     
 	DESVALORIZA.utilities.sort_json(data.Marcas);
 		
-	//expect(utilities.name).toEqual(data.name);
-	//expect(null).toBeNull(); 
-	//expect(a).not.toBeNull();
-	//expect(b).toMatch("B");
 	expect(data).not.toBeNull();
-	expect(data.Marcas[0].name).toMatch("A");
-	expect(data.Marcas[1].name).toMatch("B");
-	expect(data.Marcas[2].name).toMatch("C");
-	expect(data.Marcas[3].name).toMatch("D");
+	expect(data.Marcas[0].name).toEqual("A");
+	expect(data.Marcas[1].name).toEqual("B");
+	expect(data.Marcas[2].name).toEqual("C");
+	expect(data.Marcas[3].name).toEqual("D");
+	
+	expect(data.Marcas[3].name).not.toEqual("A");
 	
 	
   });
   
-
+  it("Validates an specific data value", function() {
+    //the text content of the selected option
+	//$("#elementId :selected").text()  
+	
+	//the value of the selected option
+	//$("#elementId").val() 
+	var makersName = 'a';
+	var makerID; 	
+	
+	//DESVALORIZA.makers.install();
+	
+	//makerIDSet = $(DESVALORIZA.makers.select_id).val("44");
+	//console.log((DESVALORIZA.makers.select_id).val());
+	
+	//makersName = $("#maker :selected").text();	
+	
+    expect(makersName).not.toBe(null);
+    //expect(a).not.toBe(null);
+  });
   
 });
