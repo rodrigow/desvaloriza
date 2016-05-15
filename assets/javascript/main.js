@@ -1,4 +1,5 @@
 var DESVALORIZA = DESVALORIZA || {};
+var MARKET_VALUE;
 
 DESVALORIZA.utilities = {};
 DESVALORIZA.utilities = {
@@ -15,29 +16,66 @@ DESVALORIZA.utilities = {
     }
 };
 
+DESVALORIZA.models = {};
+DESVALORIZA.models = {
+	select_id: '#model',
+    fipe_url: 'http://fipeapi.appspot.com/api/1/carros/veiculos/id.json',
+	getModel: function () {
+	  var value = $(DESVALORIZA.makers.select_id).val();
+	  var url = DESVALORIZA.models.fipe_url.replace("id",value);
+
+	  $.getJSON(url)
+            .done(function (data) {
+                DESVALORIZA.utilities.sort_json(data);
+                //console.log(DESVALORIZA.makers.select_id);
+			    var model_select = $(DESVALORIZA.models.select_id);
+				//console.log(DESVALORIZA.makers.select_id);
+                
+				model_select.append($('<option></option>')
+                        .attr('value', '0')
+                        .text("Select the Model... "));
+				
+				$.each(data, function (i, item) {
+                    console.log(item.id + item.name);
+                    model_select.append($('<option></option>')
+                        .attr('value', item.id)
+                        .text(item.name));
+                })			
+            });
+		}
+};
+
 DESVALORIZA.makers = {};
 DESVALORIZA.makers = {
     select_id: '#maker',
     fipe_url: 'http://fipeapi.appspot.com/api/1/carros/marcas.json',
 
-
     install: function () {
         $.getJSON(DESVALORIZA.makers.fipe_url)
             .done(function (data) {
-
                 DESVALORIZA.utilities.sort_json(data);
-
-                var maker_select = $(DESVALORIZA.makers.select_id);
-                $.each(data, function (i, item) {
-                    // console.log(item.id + item.name);
+               
+			    var maker_select = $(DESVALORIZA.makers.select_id);
+				//console.log(DESVALORIZA.makers.select_id);
+                
+				maker_select.append($('<option></option>')
+                        .attr('value', '0')
+                        .text("Select the Maker... "));
+				
+				$.each(data, function (i, item) {
+                    //console.log(item.id + item.name);
                     maker_select.append($('<option></option>')
                         .attr('value', item.id)
                         .text(item.name));
-                })
+                })			
             });
-    }
+		},
+		
+		onSelect: function () {
+			DESVALORIZA.models.getModel();
+		}
 };
-
+	
 $(document).ready(function () {
     DESVALORIZA.makers.install();
     
