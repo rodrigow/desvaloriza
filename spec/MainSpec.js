@@ -1,4 +1,4 @@
-describe("A test harness suite", function() {
+xdescribe("A test harness suite", function() {
  
   //var utilities;
   
@@ -8,7 +8,7 @@ describe("A test harness suite", function() {
 	
   });
 
-  xit("Validates the combo sort.", function() {
+  it("Validates the combo sort.", function() {
 	a = 'A';
 	b = 'B';
 	c = 'C';
@@ -19,7 +19,7 @@ describe("A test harness suite", function() {
 				{"id": "2", "name": "B"},
 				{"id": "3", "name": "C"},
 				{"id": "1", "name": "A"}
-			]}
+			]};
     
 	DESVALORIZA.utilities.sort_json(data.Marcas);
 		

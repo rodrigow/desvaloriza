@@ -13,7 +13,13 @@ DESVALORIZA.utilities = {
                 return 0;
             }
         });
-    }
+    },
+	addComboOptions:function (combo) {
+		combo.append($('<option></option>')
+                        .attr('value', '0')
+                        .text("Select the Model... "));
+	}
+	
 };
 
 DESVALORIZA.models = {};
@@ -67,7 +73,7 @@ DESVALORIZA.makers = {
                     maker_select.append($('<option></option>')
                         .attr('value', item.id)
                         .text(item.name));
-                })			
+                })	;		
             });
 		},
 		
