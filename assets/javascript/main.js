@@ -24,6 +24,7 @@ DESVALORIZA.models = {};
 DESVALORIZA.models = {
     select_id: '#model',
     fipe_url: 'http://fipeapi.appspot.com/api/1/carros/veiculos/id.json',
+
     getModel: function () {
         var value = $(DESVALORIZA.makers.select_id).val();
         var url = DESVALORIZA.models.fipe_url.replace("id", value);
@@ -35,6 +36,7 @@ DESVALORIZA.models = {
                 var model_select = $(DESVALORIZA.models.select_id);
                 //console.log(DESVALORIZA.makers.select_id);
 
+                model_select.empty();
                 model_select.append($('<option></option>')
                     .attr('value', '0')
                     .text("Select the Model... "));
