@@ -39,7 +39,7 @@ DESVALORIZA.google = {
 			legend: { position: 'bottom' }
 		};
 
-        var chart = new google.visualization.LineChart(document.getElementById('price_chart'));
+        var chart = new google.visualization.AreaChart(document.getElementById('price_chart'));
 
 		chart.draw(data, options);
     }
