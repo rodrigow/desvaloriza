@@ -23,8 +23,8 @@ DESVALORIZA.utilities = {
 DESVALORIZA.prices = {};
 DESVALORIZA.prices = {
     div_prices_id: '#prices',
-    fipe_model_url: 'http://fipeapi.appspot.com/api/1/carros/veiculo/maker/model.json',
-    fipe_price_url: 'http://fipeapi.appspot.com/api/1/carros/veiculo/maker/model/id.json',
+    fipe_model_url: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model.json',
+    fipe_price_url: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model/id.json',
 
     div_prices: function() {
         var div_prices = $(DESVALORIZA.prices.div_prices_id);
@@ -36,10 +36,10 @@ DESVALORIZA.prices = {
     },
 
     years: function () {
-        var maker = $(DESVALORIZA.makers.select_id).val();
-        var url = DESVALORIZA.prices.fipe_model_url.replace("maker", maker);
+        var maker = DESVALORIZA.makers.dropdown().val();
+        var url = DESVALORIZA.prices.fipe_model_url.replace("type", DESVALORIZA.makers.type()).replace("maker", maker);
 
-        var model = $(DESVALORIZA.models.select_id).val();
+        var model = DESVALORIZA.models.dropdown().val();
         url = url.replace("model", model);
 
         $.getJSON(url)
@@ -54,7 +54,7 @@ DESVALORIZA.prices = {
 
     prices: function(maker, model, id) {
         var url = DESVALORIZA.prices.fipe_price_url
-            .replace("maker", maker).replace("model", model).replace("id", id);
+            .replace("type", DESVALORIZA.makers.type()).replace("maker", maker).replace("model", model).replace("id", id);
 
         $.getJSON(url)
             .done(function (ano) {
@@ -65,11 +65,11 @@ DESVALORIZA.prices = {
 
 DESVALORIZA.models = {};
 DESVALORIZA.models = {
-    select_id: '#model',
-    fipe_url: 'http://fipeapi.appspot.com/api/1/carros/veiculos/id.json',
+    dropdown_id: '#model',
+    veiculos_url: 'http://fipeapi.appspot.com/api/1/type/veiculos/id.json',
 
     dropdown: function() {
-        var combo = $(DESVALORIZA.models.select_id);
+        var combo = $(DESVALORIZA.models.dropdown_id);
         return combo;
     },
 
@@ -79,8 +79,8 @@ DESVALORIZA.models = {
     },
 
     getModel: function() {
-        var value = $(DESVALORIZA.makers.select_id).val();
-        var url = DESVALORIZA.models.fipe_url.replace("id", value);
+        var value = DESVALORIZA.makers.dropdown().val();
+        var url = DESVALORIZA.models.veiculos_url.replace("type", DESVALORIZA.makers.type()).replace("id", value);
 
         $.getJSON(url)
             .done(function (data) {
@@ -106,22 +106,40 @@ DESVALORIZA.models = {
 
 DESVALORIZA.makers = {};
 DESVALORIZA.makers = {
-    select_id: '#maker',
-    fipe_url: 'http://fipeapi.appspot.com/api/1/carros/marcas.json',
+    dropdown_id: '#maker',
+    types_name: 'input[name=types]:checked',
+    marcas_url: 'http://fipeapi.appspot.com/api/1/type/marcas.json',
+
+    dropdown: function() {
+        var dd = $(DESVALORIZA.makers.dropdown_id);
+        return dd;
+    },
+
+    clean: function() {
+        DESVALORIZA.models.clean();
+        DESVALORIZA.makers.dropdown().empty();
+    },
+
+    type: function() {
+        var t = $(DESVALORIZA.makers.types_name).val();
+        return t;
+    },
 
     install: function () {
-        $.getJSON(DESVALORIZA.makers.fipe_url)
+        DESVALORIZA.makers.clean();
+
+        var url = DESVALORIZA.makers.marcas_url.replace("type", DESVALORIZA.makers.type());
+
+        $.getJSON(url)
             .done(function (data) {
                 DESVALORIZA.utilities.sort_json(data);
 
-                var maker_select = $(DESVALORIZA.makers.select_id);
-
-                maker_select.append($('<option></option>')
+                DESVALORIZA.makers.dropdown().append($('<option></option>')
                     .attr('value', '0')
                     .text("Select the Maker... "));
 
                 $.each(data, function (i, item) {
-                    maker_select.append($('<option></option>')
+                    DESVALORIZA.makers.dropdown().append($('<option></option>')
                         .attr('value', item.id)
                         .text(item.name));
                 });

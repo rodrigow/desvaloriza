@@ -10,6 +10,12 @@
 <br/>
 
 <p>
+	<label for="types">Tipo:</label>
+	<input type=radio name="types" value="carros" checked="checked" onclick="DESVALORIZA.makers.install()">Carros</input>
+	<input type=radio name="types" value="motos" onclick="DESVALORIZA.makers.install()">Motos</input>
+</p>
+
+<p>
     <label for="maker">Marca:</label>
     <select id="maker" onchange="DESVALORIZA.makers.onSelect()"></select>
 </p>
