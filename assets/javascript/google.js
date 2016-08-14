@@ -6,6 +6,11 @@ DESVALORIZA.google = {
 
     div_price_chart_id: '#price_chart',
 
+    div_price_chart: function() {
+        var div = $(DESVALORIZA.google.div_price_chart_id);
+        return div;
+    },
+
     send_analytics: function() {
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -22,7 +27,8 @@ DESVALORIZA.google = {
     },
 
     clean_chart: function() {
-        $(DESVALORIZA.google.div_price_chart_id).empty();
+        DESVALORIZA.google.div_price_chart().empty();
+        DESVALORIZA.google.div_price_chart().css({"height": "0px"});
     },
 
     new_datatable: function() {
@@ -40,6 +46,9 @@ DESVALORIZA.google = {
 		};
 
         var chart = new google.visualization.AreaChart(document.getElementById('price_chart'));
+
+        DESVALORIZA.google.div_price_chart().css({"height": "500px"});
+        DESVALORIZA.prices.div_prices().css({"height": "500px"});
 
 		chart.draw(data, options);
     }

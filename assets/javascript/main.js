@@ -40,6 +40,7 @@ DESVALORIZA.prices = {
 
     clean: function() {
         DESVALORIZA.google.clean_chart();
+        DESVALORIZA.prices.div_prices().css({"height": "0px"});
         DESVALORIZA.prices.div_prices().empty();
     },
 
