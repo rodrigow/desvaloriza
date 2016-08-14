@@ -24,6 +24,17 @@ DESVALORIZA.utilities = {
             modelo = 'Zero KM';
         }
         return modelo;
+    },
+
+    attach_spinner: function() {
+        var loading = $('#loadingDiv').hide();
+        $(document)
+            .ajaxStart(function() {
+                loading.show();
+            })
+            .ajaxStop(function () {
+                loading.hide();
+            });
     }
 };
 
@@ -160,6 +171,7 @@ DESVALORIZA.makers = {
 
 $(document).ready(function () {
     DESVALORIZA.makers.install();
+    DESVALORIZA.utilities.attach_spinner();
 
     DESVALORIZA.google.send_analytics();
 });
