@@ -13,10 +13,17 @@ DESVALORIZA.utilities = {
             }
         });
     },
-    addComboOptions: function (combo) {
-        combo.append($('<option></option>')
-            .attr('value', '0')
-            .text("Select the Model... "));
+
+    addDropdownOption: function (dropdown, value, text) {
+        dropdown.append($('<option></option>').attr('value', value).text(text));
+    },
+
+    zero_km: function(ano_modelo) {
+        var modelo = ano_modelo;
+        if (modelo === '32000') {
+            modelo = 'Zero KM';
+        }
+        return modelo;
     }
 };
 
@@ -32,33 +39,40 @@ DESVALORIZA.prices = {
     },
 
     clean: function() {
+        DESVALORIZA.google.clean_chart();
         DESVALORIZA.prices.div_prices().empty();
     },
 
     years: function () {
         var maker = DESVALORIZA.makers.dropdown().val();
-        var url = DESVALORIZA.prices.fipe_model_url.replace("type", DESVALORIZA.makers.type()).replace("maker", maker);
-
         var model = DESVALORIZA.models.dropdown().val();
-        url = url.replace("model", model);
 
+        var url = DESVALORIZA.prices.fipe_model_url
+            .replace("type", DESVALORIZA.makers.type()).replace("maker", maker).replace("model", model);
+
+        var prices_datatable = DESVALORIZA.google.new_datatable();
         $.getJSON(url)
             .done(function (data) {
                 DESVALORIZA.prices.clean();
 
                 $.each(data, function (i, item) {
-                    DESVALORIZA.prices.prices(maker, model, item.id);
+                    DESVALORIZA.prices.prices(maker, model, item.id, prices_datatable);
                 });
+                DESVALORIZA.google.drawChart(prices_datatable);
             });
     },
 
-    prices: function(maker, model, id) {
+    prices: function(maker, model, id, prices_datatable) {
         var url = DESVALORIZA.prices.fipe_price_url
             .replace("type", DESVALORIZA.makers.type()).replace("maker", maker).replace("model", model).replace("id", id);
 
         $.getJSON(url)
             .done(function (ano) {
-                DESVALORIZA.prices.div_prices().append($('<p></p>').text(ano.ano_modelo + " " + ano.preco));
+                var modelo = DESVALORIZA.utilities.zero_km(ano.ano_modelo);
+
+                DESVALORIZA.prices.div_prices().append($('<p></p>').text(modelo + " " + ano.preco));
+
+                prices_datatable.addRow([modelo, DESVALORIZA.google.price_to_number(ano.preco)]);
             });
     }
 };
@@ -87,14 +101,10 @@ DESVALORIZA.models = {
                 DESVALORIZA.utilities.sort_json(data);
                 DESVALORIZA.models.clean();
 
-                DESVALORIZA.models.dropdown().append($('<option></option>')
-                    .attr('value', '0')
-                    .text("Select the Model... "));
+                DESVALORIZA.utilities.addDropdownOption(DESVALORIZA.models.dropdown(), 0, "Select the Model...");
 
                 $.each(data, function (i, item) {
-                    DESVALORIZA.models.dropdown().append($('<option></option>')
-                        .attr('value', item.id)
-                        .text(item.name));
+                    DESVALORIZA.utilities.addDropdownOption(DESVALORIZA.models.dropdown(), item.id, item.name);
                 })
             });
     },
@@ -134,14 +144,10 @@ DESVALORIZA.makers = {
             .done(function (data) {
                 DESVALORIZA.utilities.sort_json(data);
 
-                DESVALORIZA.makers.dropdown().append($('<option></option>')
-                    .attr('value', '0')
-                    .text("Select the Maker... "));
+                DESVALORIZA.utilities.addDropdownOption(DESVALORIZA.makers.dropdown(), 0, "Select the Maker...");
 
                 $.each(data, function (i, item) {
-                    DESVALORIZA.makers.dropdown().append($('<option></option>')
-                        .attr('value', item.id)
-                        .text(item.name));
+                    DESVALORIZA.utilities.addDropdownOption(DESVALORIZA.makers.dropdown(), item.id, item.name);
                 });
             });
     },

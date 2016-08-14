@@ -3,6 +3,15 @@
     <title>Desvaloriza</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="assets/javascript/google.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+
+        $.ajaxSetup({
+            async: false
+        });
+		// google.charts.setOnLoadCallback(DESVALORIZA.google.drawChart);
+    </script>
 </head>
 
 <body>
@@ -24,6 +33,9 @@
     <label for="model">Modelo:</label>
     <select id="model" onchange="DESVALORIZA.models.onSelect()"></select>
 </p>
+
+<!-- <div id="price_chart" style="width: 900px; height: 500px"></div> -->
+<div id="price_chart"></div>
 
 <div id="prices"></div>
 
