@@ -20,35 +20,88 @@ DESVALORIZA.utilities = {
     }
 };
 
+DESVALORIZA.prices = {};
+DESVALORIZA.prices = {
+    div_prices_id: '#prices',
+    fipe_model_url: 'http://fipeapi.appspot.com/api/1/carros/veiculo/maker/model.json',
+    fipe_price_url: 'http://fipeapi.appspot.com/api/1/carros/veiculo/maker/model/id.json',
+
+    div_prices: function() {
+        var div_prices = $(DESVALORIZA.prices.div_prices_id);
+        return div_prices;
+    },
+
+    clean: function() {
+        DESVALORIZA.prices.div_prices().empty();
+    },
+
+    years: function () {
+        var maker = $(DESVALORIZA.makers.select_id).val();
+        var url = DESVALORIZA.prices.fipe_model_url.replace("maker", maker);
+
+        var model = $(DESVALORIZA.models.select_id).val();
+        url = url.replace("model", model);
+
+        $.getJSON(url)
+            .done(function (data) {
+                DESVALORIZA.prices.clean();
+
+                $.each(data, function (i, item) {
+                    DESVALORIZA.prices.prices(maker, model, item.id);
+                });
+            });
+    },
+
+    prices: function(maker, model, id) {
+        var url = DESVALORIZA.prices.fipe_price_url
+            .replace("maker", maker).replace("model", model).replace("id", id);
+
+        $.getJSON(url)
+            .done(function (ano) {
+                DESVALORIZA.prices.div_prices().append($('<p></p>').text(ano.ano_modelo + " " + ano.preco));
+            });
+    }
+};
+
 DESVALORIZA.models = {};
 DESVALORIZA.models = {
     select_id: '#model',
     fipe_url: 'http://fipeapi.appspot.com/api/1/carros/veiculos/id.json',
 
-    getModel: function () {
+    dropdown: function() {
+        var combo = $(DESVALORIZA.models.select_id);
+        return combo;
+    },
+
+    clean: function() {
+        DESVALORIZA.prices.clean();
+        DESVALORIZA.models.dropdown().empty();
+    },
+
+    getModel: function() {
         var value = $(DESVALORIZA.makers.select_id).val();
         var url = DESVALORIZA.models.fipe_url.replace("id", value);
 
         $.getJSON(url)
             .done(function (data) {
                 DESVALORIZA.utilities.sort_json(data);
-                //console.log(DESVALORIZA.makers.select_id);
-                var model_select = $(DESVALORIZA.models.select_id);
-                //console.log(DESVALORIZA.makers.select_id);
+                DESVALORIZA.models.clean();
 
-                model_select.empty();
-                model_select.append($('<option></option>')
+                DESVALORIZA.models.dropdown().append($('<option></option>')
                     .attr('value', '0')
                     .text("Select the Model... "));
 
                 $.each(data, function (i, item) {
-                    console.log(item.id + item.name);
-                    model_select.append($('<option></option>')
+                    DESVALORIZA.models.dropdown().append($('<option></option>')
                         .attr('value', item.id)
                         .text(item.name));
                 })
             });
+    },
+    onSelect: function () {
+        DESVALORIZA.prices.years();
     }
+
 };
 
 DESVALORIZA.makers = {};
@@ -62,14 +115,12 @@ DESVALORIZA.makers = {
                 DESVALORIZA.utilities.sort_json(data);
 
                 var maker_select = $(DESVALORIZA.makers.select_id);
-                //console.log(DESVALORIZA.makers.select_id);
 
                 maker_select.append($('<option></option>')
                     .attr('value', '0')
                     .text("Select the Maker... "));
 
                 $.each(data, function (i, item) {
-                    //console.log(item.id + item.name);
                     maker_select.append($('<option></option>')
                         .attr('value', item.id)
                         .text(item.name));
