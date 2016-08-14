@@ -42,7 +42,8 @@ DESVALORIZA.google = {
 		var options = {
 			title: 'Desvaloriza',
 			curveType: 'function',
-			legend: { position: 'bottom' }
+			legend: { position: 'bottom' },
+            vAxis: {minValue: 0}
 		};
 
         var chart = new google.visualization.AreaChart(document.getElementById('price_chart'));
