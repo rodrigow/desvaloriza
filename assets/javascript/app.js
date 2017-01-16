@@ -1,25 +1,51 @@
 (function () {
   'use strict';
 
-  angular.module('DesvalorizaApp', [])
-  .controller('DesvalorizaController', DesvalorizaController)
-  .service('DesvalorizaService', DesvalorizaService);
+  // Define Angular App
+  var DesvalorizaApp = angular.module('DesvalorizaApp', []);
+  DesvalorizaApp.controller('desvalorizaController', desvalorizaController);
+  // .service('desvalorizaService', desvalorizaService);
 
-  DesvalorizaController.$inject = ['DesvalorizaService'];
-  function DesvalorizaController (service) {
+  desvalorizaController.$inject = ['$http'];
+  function desvalorizaController ($http) {
     var desvaloriza = this;
+    desvaloriza.selected_maker = [];
+    desvaloriza.available_makers = [];
 
-  }
+    $http.get('http://fipeapi.appspot.com/api/1/carros/marcas.json')
+      .then(
+        function(result) {
+          desvaloriza.available_makers = result.data;
+        });
+  };
 
-  function DesvalorizaService() {
-    var service = this;
-
-    var url = {
-      makers: 'http://fipeapi.appspot.com/api/1/type/marcas.json',
-      models: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model.json',
-      vehicles: 'http://fipeapi.appspot.com/api/1/type/veiculos/id.json',
-      price: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model/id.json'
-    };
-  }
+  // desvalorizaService.$inject = ['$http']
+  // function desvalorizaService($http) {
+  //   var service = this;
+  //   service.makers = [];
+  //
+  //
+  //   var url = {
+  //     makers: 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json',
+  //     models: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model.json',
+  //     vehicles: 'http://fipeapi.appspot.com/api/1/type/veiculos/id.json',
+  //     price: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model/id.json'
+  //   };
+  //
+  //   service.getMakers = function () {
+  //     return $http.get("http://fipeapi.appspot.com/api/1/carros/marcas.json")
+  //       .then(
+  //         function success(response) {
+  //           service.makers = response.data;
+  //           console.log('Retrieved ', service.makers.length, ' makers');
+  //           return service.makers;
+  //         },
+  //         function error(reponse) {
+  //           service.makers = [];
+  //           console.error('Error calling makers: ', reponse);
+  //         }
+  //       );
+  //   }
+  // }
 
 })();
