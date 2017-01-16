@@ -9,6 +9,7 @@
   desvalorizaController.$inject = ['$http'];
   function desvalorizaController ($http) {
     var desvaloriza = this;
+    desvaloriza.type = '';
     desvaloriza.selected_maker = [];
     desvaloriza.available_makers = [];
 
