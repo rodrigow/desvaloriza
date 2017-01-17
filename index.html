@@ -28,28 +28,25 @@
   <div class="form-group">
     <label for="types">Tipo:</label>
       <label>
-          <input type=radio name="types" ng-model="desvaloriza.type" value="carros"></input>
+          <input type=radio name="types" ng-model="desvaloriza.type" value="carros" ng-click="desvaloriza.loadMakers();"></input>
           <b>Carros</b>
       </label>
       <label>
-          <input type=radio name="types" ng-model="desvaloriza.type" value="motos"></input>
+          <input type=radio name="types" ng-model="desvaloriza.type" value="motos" ng-click="desvaloriza.loadMakers();"></input>
           <b>Motos</b>
       </label>
+      {{desvaloriza.selected_maker}}
   </div>
 
   <div class="form-group">
     <label for="maker">Marca:</label>
     <select id="maker" ng-model="desvaloriza.selected_maker"
-      ng-options="maker.fipe_name for maker in desvaloriza.available_makers track by maker.id">
-        <option value="" ng-if="desvaloriza.selected_maker.length <= 0">Selecione a Marca</option>
+      ng-options="maker.fipe_name for maker in desvaloriza.available_makers | orderBy:'fipe_name' track by maker.id"
+      ng-click="desvaloriza.loadModels()">
+        <option value="">Selecione a Marca</option>
     </select>
   </div>
 </div>
-
-<div id="loadingDiv" style="display: none; position: absolute; width: 100%;">
-    <img src="assets/images/loading.gif" style="display: block; margin-left: auto; margin-right: auto;">
-</div>
-
 
 <p>
     <label for="model">Modelo:</label>

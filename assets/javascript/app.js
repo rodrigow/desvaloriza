@@ -9,15 +9,24 @@
   desvalorizaController.$inject = ['$http'];
   function desvalorizaController ($http) {
     var desvaloriza = this;
-    desvaloriza.type = '';
-    desvaloriza.selected_maker = [];
+    desvaloriza.type = 'carros';
+    desvaloriza.selected_maker = {};
     desvaloriza.available_makers = [];
 
-    $http.get('http://fipeapi.appspot.com/api/1/carros/marcas.json')
-      .then(
-        function(result) {
-          desvaloriza.available_makers = result.data;
-        });
+    desvaloriza.loadMakers = function () {
+      var url = 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json';
+      $http.get(url.replace('TYPE', desvaloriza.type))
+        .then(
+          function(result) {
+            desvaloriza.available_makers = result.data;
+          });
+    };
+
+    desvaloriza.loadModels = function () {
+
+    };
+
+    desvaloriza.loadMakers();
   };
 
   // desvalorizaService.$inject = ['$http']
