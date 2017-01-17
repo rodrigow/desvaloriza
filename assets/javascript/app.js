@@ -10,10 +10,11 @@
   function desvalorizaController ($http) {
     var desvaloriza = this;
 
-    desvaloriza.type = 'carros';
+    desvaloriza.type = '';
 
     desvaloriza.maker = {};
     desvaloriza.available_makers = [];
+
     desvaloriza.loadMakers = function () {
       var url = 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas';
 
@@ -27,7 +28,7 @@
 
     };
 
-    desvaloriza.loadMakers();
+    // desvaloriza.loadMakers();
   };
 
   // desvalorizaService.$inject = ['$http']
