@@ -15,30 +15,11 @@
     desvaloriza.maker = {};
     desvaloriza.available_makers = [];
     desvaloriza.loadMakers = function () {
-      var url = 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json';
+      var url = 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas';
 
-      // $http.get(url.replace('TYPE', desvaloriza.type))
-      //   .then(
-      //     function (result) {
-      //       desvaloriza.available_makers = result.data;
-      //     },
-      //     function (result) {
-      //       desvaloriza.serviceError = result;
-      //     });
-
-      var cars = [
-        {"name": "AUDI", "fipe_name": "Audi", "order": 2, "key": "audi-6", "id": 6},
-        {"name": "BMW", "fipe_name": "BMW", "order": 2, "key": "bmw-7", "id": 7}
-      ];
-      var bikes = [
-        {"name": "HONDA", "fipe_name": "Honda", "order": 2, "key": "honda-6", "id": 8},
-        {"name": "BMW", "fipe_name": "BMW", "order": 2, "key": "bmw-8", "id": 9}
-      ];
-      if (desvaloriza.type === 'carros') {
-        desvaloriza.available_makers = cars;
-      } else {
-        desvaloriza.available_makers = bikes;
-      }
+      $http.get(url.replace('TYPE', desvaloriza.type)).then(function (result) {
+        desvaloriza.available_makers = result.data;
+      });
     };
 
     desvaloriza.model = {};
