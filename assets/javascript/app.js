@@ -2,7 +2,7 @@
   'use strict';
 
   // Define Angular App
-  var desvalorizaApp = angular.module('DesvalorizaApp', []);
+  var desvalorizaApp = angular.module('DesvalorizaApp', ['chart.js']);
   desvalorizaApp.controller('desvalorizaController', desvalorizaController);
   desvalorizaApp.service('makersService', makersService);
   desvalorizaApp.service('modelsService', modelsService);
@@ -35,6 +35,7 @@
     desvaloriza.available_models = [];
     desvaloriza.loadModels = function () {
       desvaloriza.available_prices = [];
+      desvaloriza.chart = {};
       if (desvaloriza.maker) {
         modelsService.fetch(desvaloriza.type, desvaloriza.maker.codigo).then(function (response) {
           desvaloriza.available_models = response.data.modelos;
@@ -43,9 +44,13 @@
     }
 
     desvaloriza.available_prices = [];
+    desvaloriza.chart = {};
     desvaloriza.loadPrices = function () {
       if (desvaloriza.model) {
         desvaloriza.available_prices = [];
+        desvaloriza.chart = {};
+        desvaloriza.chart.labels = [];
+        desvaloriza.chart.data = [];
         yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
           for (var i = 0; i < response.data.length; i++) {
             var year = response.data[i].codigo;
@@ -57,7 +62,11 @@
                 price.modelo = price.AnoModelo;
               }
               price.valor_numerico = parseFloat(price.Valor.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
-              desvaloriza.available_prices.push(response.data);
+              desvaloriza.available_prices.push(price);
+
+              // TODO need to order results by YEAR
+              desvaloriza.chart.labels.push(price.modelo);
+              desvaloriza.chart.data.push(price.valor_numerico);
             }, handleError);
           }
         }, handleError);
