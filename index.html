@@ -63,22 +63,32 @@
     <label for="model">Modelo:</label>
     <select id="model" ng-model="desvaloriza.model"
       ng-options="model.nome for model in desvaloriza.available_models | orderBy:'nome' track by model.codigo"
-      ng-change="">
+      ng-change="desvaloriza.loadPrices()">
         <option value="">Selecione o Modelo</option>
     </select>
   </div>
 
   <div class="form-group">
+    <p ng-repeat="price in desvaloriza.available_prices | orderBy: '-AnoModelo' ">Modelo: {{price.modelo}}, Valor: {{price.Valor}}</p>
+  </div>
+
+<!--
+  <div class="form-group">
     <p>Tipo: {{desvaloriza.type}}</p>
     <p>Marca: {{desvaloriza.maker}}</p>
     <p>Modelo: {{desvaloriza.model}}</p>
+    <div>
+      <ul>
+        <li ng-repeat="price in desvaloriza.available_prices | orderBy: '-AnoModelo' ">{{price}}</li>
+      </ul>
+    </div>
   </div>
-</div>
+</div> -->
 
 <!-- <div id="price_chart" style="width: 900px; height: 500px"></div> -->
-<div id="price_chart" style="float: left; height: 0px; width: 50%;"></div>
+<!-- <div id="price_chart" style="float: left; height: 0px; width: 50%;"></div>
 
-<div id="prices" style="height: 0px; overflow: hidden; text-align: center; width: 50%"></div>
+<div id="prices" style="height: 0px; overflow: hidden; text-align: center; width: 50%"></div> -->
 
 <script src="assets/javascript/app.js"></script>
 </body>
