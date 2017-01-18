@@ -9,6 +9,12 @@
   desvalorizaApp.service('yearsService', yearsService);
   desvalorizaApp.service('pricesService', pricesService);
 
+  desvalorizaApp.config(function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+      colors: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
+    });
+  });
+
   var url = {
     makers: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas',
     models: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas/MAKER/modelos',
@@ -48,9 +54,11 @@
     desvaloriza.loadPrices = function () {
       if (desvaloriza.model) {
         desvaloriza.available_prices = [];
+
         desvaloriza.chart = {};
         desvaloriza.chart.labels = [];
         desvaloriza.chart.data = [];
+
         yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
           for (var i = 0; i < response.data.length; i++) {
             var year = response.data[i].codigo;

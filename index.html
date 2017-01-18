@@ -73,8 +73,7 @@
   <div class="form-group" ng-if="desvaloriza.chart">
     <canvas id="line" class="chart chart-line"
             chart-data="desvaloriza.chart.data"
-            chart-labels="desvaloriza.chart.labels"
-            chart-click="onClick">
+            chart-labels="desvaloriza.chart.labels" >
     </canvas>
   </div>
 
@@ -92,15 +91,15 @@
         <li ng-repeat="price in desvaloriza.available_prices | orderBy: '-AnoModelo' ">{{price}}</li>
       </ul>
     </div>
-  </div>
-</div> -->
+  </div> -->
+</div>
 
 <!-- <div id="price_chart" style="width: 900px; height: 500px"></div> -->
 <!-- <div id="price_chart" style="float: left; height: 0px; width: 50%;"></div>
 
 <div id="prices" style="height: 0px; overflow: hidden; text-align: center; width: 50%"></div> -->
 
-<script src="assets/javascript/chart.js-2.4.0/Chart.min.js" type="text/javascript"></script>
+<script src="assets/javascript/Chart.js-2.4.0/Chart.bundle.min.js" type="text/javascript"></script>
 <script src="assets/javascript/angular-chart.js-1.1.1/angular-chart.min.js" type="text/javascript"></script>
 </body>
 </html>
