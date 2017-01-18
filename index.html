@@ -25,7 +25,14 @@
   <h1>Desvaloriza.com</h1>
   <br/>
 
-  {{desvaloriza.serviceError}}
+
+  <div class="panel panel-danger alert-danger" role="alert" ng-if="desvaloriza.error">
+    <div class="panel-heading">Error</div>
+    <div class="panel-body">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      {{desvaloriza.error}}
+    </div>
+  </div>
 
   <div class="form-group">
     <label for="types">Tipo:</label>
@@ -47,7 +54,7 @@
     <label for="maker">Marca:</label>
     <select id="maker" ng-model="desvaloriza.maker"
       ng-options="maker.nome for maker in desvaloriza.available_makers | orderBy:'nome' track by maker.codigo"
-      ng-click="desvaloriza.loadModels()">
+      ng-change="desvaloriza.loadModels()">
         <option value="">Selecione a Marca</option>
     </select>
   </div>
@@ -61,7 +68,6 @@
     <p>Tipo: {{desvaloriza.type}}</p>
     <p>Marca: {{desvaloriza.maker}}</p>
     <p>Modelo: {{desvaloriza.model}}</p>
-
   </div>
 </div>
 

@@ -2,12 +2,16 @@
   'use strict';
 
   // Define Angular App
-  var DesvalorizaApp = angular.module('DesvalorizaApp', []);
-  DesvalorizaApp.controller('desvalorizaController', desvalorizaController);
-  // .service('desvalorizaService', desvalorizaService);
+  var desvalorizaApp = angular.module('DesvalorizaApp', []);
+  desvalorizaApp.controller('desvalorizaController', desvalorizaController);
+  desvalorizaApp.service('makersService', makersService);
 
-  desvalorizaController.$inject = ['$http'];
-  function desvalorizaController ($http) {
+  var url = {
+    makers: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas'
+  };
+
+  desvalorizaController.$inject = ['makersService'];
+  function desvalorizaController (makersService) {
     var desvaloriza = this;
 
     desvaloriza.type = '';
@@ -15,49 +19,27 @@
     desvaloriza.maker = {};
     desvaloriza.available_makers = [];
 
-    desvaloriza.loadMakers = function () {
-      var url = 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas';
+    var handleError = function (response) {
+      desvaloriza.error = response;
+    };
 
-      $http.get(url.replace('TYPE', desvaloriza.type)).then(function (result) {
-        desvaloriza.available_makers = result.data;
-      });
+    desvaloriza.loadMakers = function () {
+      makersService.fetch(desvaloriza.type).then(function (response) {
+        desvaloriza.available_makers = response.data;
+      }, handleError);
     };
 
     desvaloriza.model = {};
-    desvaloriza.loadModels = function () {
-
-    };
-
-    // desvaloriza.loadMakers();
+    desvaloriza.loadModels = function () {};
   };
 
-  // desvalorizaService.$inject = ['$http']
-  // function desvalorizaService($http) {
-  //   var service = this;
-  //   service.makers = [];
-  //
-  //
-  //   var url = {
-  //     makers: 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json',
-  //     models: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model.json',
-  //     vehicles: 'http://fipeapi.appspot.com/api/1/type/veiculos/id.json',
-  //     price: 'http://fipeapi.appspot.com/api/1/type/veiculo/maker/model/id.json'
-  //   };
-  //
-  //   service.getMakers = function () {
-  //     return $http.get("http://fipeapi.appspot.com/api/1/carros/marcas.json")
-  //       .then(
-  //         function success(response) {
-  //           service.makers = response.data;
-  //           console.log('Retrieved ', service.makers.length, ' makers');
-  //           return service.makers;
-  //         },
-  //         function error(reponse) {
-  //           service.makers = [];
-  //           console.error('Error calling makers: ', reponse);
-  //         }
-  //       );
-  //   }
-  // }
+  makersService.$inject = ['$http']
+  function makersService($http) {
+    return {
+      fetch: function(type) {
+        return $http.get(url.makers.replace('TYPE', type));
+      }
+    };
+  };
 
 })();
