@@ -52,7 +52,6 @@
         desvaloriza.chart = {};
         desvaloriza.chart.labels = [];
         desvaloriza.chart.data = [];
-        desvaloriza.chart.data[0] = [];
         desvaloriza.chart.options = chartOptions(desvaloriza.maker.nome, desvaloriza.model.nome);
 
         yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
@@ -67,10 +66,15 @@
               }
               price.valor_numerico = parseFloat(price.Valor.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
               desvaloriza.available_prices.push(price);
-
+              desvaloriza.available_prices.sort(comparePrices);
               // TODO need to order results by YEAR
-              desvaloriza.chart.labels.push(price.modelo);
-              desvaloriza.chart.data[0].push(price.valor_numerico);
+
+              desvaloriza.chart.data[0] = [];
+              desvaloriza.chart.labels = [];
+              for (var i = 0; i < desvaloriza.available_prices.length; i++) {
+                desvaloriza.chart.labels.push(desvaloriza.available_prices[i].modelo);
+                desvaloriza.chart.data[0].push(desvaloriza.available_prices[i].valor_numerico);
+              }
             }, handleError);
           }
         }, handleError);
@@ -79,6 +83,10 @@
 
     var handleError = function (response) {
       desvaloriza.error = response;
+    }
+
+    var comparePrices = function (a, b) {
+      return b.AnoModelo - a.AnoModelo;
     }
 
     var chartOptions = function (maker, model) {
