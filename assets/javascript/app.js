@@ -9,12 +9,6 @@
   desvalorizaApp.service('yearsService', yearsService);
   desvalorizaApp.service('pricesService', pricesService);
 
-  desvalorizaApp.config(function (ChartJsProvider) {
-    ChartJsProvider.setOptions({
-      colors: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
-    });
-  });
-
   var url = {
     makers: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas',
     models: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas/MAKER/modelos',
@@ -58,6 +52,8 @@
         desvaloriza.chart = {};
         desvaloriza.chart.labels = [];
         desvaloriza.chart.data = [];
+        desvaloriza.chart.data[0] = [];
+        desvaloriza.chart.options = chartOptions(desvaloriza.maker.nome, desvaloriza.model.nome);
 
         yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
           for (var i = 0; i < response.data.length; i++) {
@@ -74,7 +70,7 @@
 
               // TODO need to order results by YEAR
               desvaloriza.chart.labels.push(price.modelo);
-              desvaloriza.chart.data.push(price.valor_numerico);
+              desvaloriza.chart.data[0].push(price.valor_numerico);
             }, handleError);
           }
         }, handleError);
@@ -83,6 +79,15 @@
 
     var handleError = function (response) {
       desvaloriza.error = response;
+    }
+
+    var chartOptions = function (maker, model) {
+      return {
+        responsive: true,
+        title: { display: true, text: 'Desvaloriza.com: ' + maker + ' - ' + model },
+        tooltips: { mode: 'nearest', intersect: false },
+        hover: { mode: 'nearest', intersect: false }
+      }
     }
 
   };
