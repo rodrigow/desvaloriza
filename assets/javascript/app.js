@@ -37,7 +37,7 @@
       desvaloriza.makerOption = loadingMessage();
       desvaloriza.available_models = [];
       makersService.fetch(desvaloriza.type).then(function (response) {
-        desvaloriza.modelOption = defaultModelOption();
+        // desvaloriza.modelOption = defaultModelOption();
         desvaloriza.makerOption = defaultMakerOption();
         desvaloriza.available_makers = response.data;
       }, handleError);
@@ -47,10 +47,10 @@
     desvaloriza.available_models = [];
     desvaloriza.modelOption = defaultModelOption();
     desvaloriza.loadModels = function () {
-      desvaloriza.modelOption = loadingMessage();
       desvaloriza.available_prices = [];
       desvaloriza.chart = {};
       if (desvaloriza.maker) {
+        desvaloriza.modelOption = loadingMessage();
         modelsService.fetch(desvaloriza.type, desvaloriza.maker.codigo).then(function (response) {
           desvaloriza.modelOption = defaultModelOption();
           desvaloriza.available_models = response.data.modelos;
