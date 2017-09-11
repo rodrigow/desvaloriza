@@ -22,22 +22,37 @@
 
     desvaloriza.type = '';
 
+    var defaultMakerOption = function () {
+      return "Selecione a Marca";
+    }
+
+    var defaultModelOption = function () {
+      return "Selecione o Modelo";
+    }
+
     desvaloriza.maker = {};
     desvaloriza.available_makers = [];
+    desvaloriza.makerOption = defaultMakerOption();
     desvaloriza.loadMakers = function () {
+      desvaloriza.makerOption = loadingMessage();
       desvaloriza.available_models = [];
       makersService.fetch(desvaloriza.type).then(function (response) {
+        desvaloriza.modelOption = defaultModelOption();
+        desvaloriza.makerOption = defaultMakerOption();
         desvaloriza.available_makers = response.data;
       }, handleError);
     };
 
     desvaloriza.model = {};
     desvaloriza.available_models = [];
+    desvaloriza.modelOption = defaultModelOption();
     desvaloriza.loadModels = function () {
+      desvaloriza.modelOption = loadingMessage();
       desvaloriza.available_prices = [];
       desvaloriza.chart = {};
       if (desvaloriza.maker) {
         modelsService.fetch(desvaloriza.type, desvaloriza.maker.codigo).then(function (response) {
+          desvaloriza.modelOption = defaultModelOption();
           desvaloriza.available_models = response.data.modelos;
         }, handleError);
       }
@@ -98,6 +113,9 @@
       }
     }
 
+    var loadingMessage = function () {
+      return "Carregando...";
+    }
   };
 
   makersService.$inject = ['$http'];
