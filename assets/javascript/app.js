@@ -37,7 +37,6 @@
       desvaloriza.makerOption = loadingMessage();
       desvaloriza.available_models = [];
       makersService.fetch(desvaloriza.type).then(function (response) {
-        // desvaloriza.modelOption = defaultModelOption();
         desvaloriza.makerOption = defaultMakerOption();
         desvaloriza.available_makers = response.data;
       }, handleError);
