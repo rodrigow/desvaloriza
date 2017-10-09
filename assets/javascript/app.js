@@ -10,10 +10,10 @@
   desvalorizaApp.service('pricesService', pricesService);
 
   var url = {
-    makers: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas',
-    models: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas/MAKER/modelos',
-    years: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas/MAKER/modelos/MODEL/anos',
-    prices: 'https://fipe-parallelum.rhcloud.com/api/v1/TYPE/marcas/MAKER/modelos/MODEL/anos/YEAR'
+    makers: 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json',
+    models: 'http://fipeapi.appspot.com/api/1/TYPE/veiculos/MAKER.json',
+    years: 'http://fipeapi.appspot.com/api/1/TYPE/veiculo/MAKER/MODEL.json',
+    prices: 'http://fipeapi.appspot.com/api/1/TYPE/veiculo/MAKER/MODEL/YEAR.json'
   };
 
   desvalorizaController.$inject = ['makersService', 'modelsService', 'yearsService', 'pricesService'];
@@ -50,9 +50,9 @@
       desvaloriza.chart = {};
       if (desvaloriza.maker) {
         desvaloriza.modelOption = loadingMessage();
-        modelsService.fetch(desvaloriza.type, desvaloriza.maker.codigo).then(function (response) {
+        modelsService.fetch(desvaloriza.type, desvaloriza.maker.id).then(function (response) {
           desvaloriza.modelOption = defaultModelOption();
-          desvaloriza.available_models = response.data.modelos;
+          desvaloriza.available_models = response.data;
         }, handleError);
       }
     }
@@ -66,19 +66,19 @@
         desvaloriza.chart = {};
         desvaloriza.chart.labels = [];
         desvaloriza.chart.data = [];
-        desvaloriza.chart.options = chartOptions(desvaloriza.maker.nome, desvaloriza.model.nome);
+        desvaloriza.chart.options = chartOptions(desvaloriza.maker.name, desvaloriza.model.name);
 
-        yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
+        yearsService.fetch(desvaloriza.type, desvaloriza.maker.id, desvaloriza.model.id).then(function (response) {
           for (var i = 0; i < response.data.length; i++) {
-            var year = response.data[i].codigo;
-            pricesService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo, year).then(function (response) {
+            var year = response.data[i].id;
+            pricesService.fetch(desvaloriza.type, desvaloriza.maker.id, desvaloriza.model.id, year).then(function (response) {
               var price = response.data;
-              if (price.AnoModelo === 32000) {
+              if (price.ano_modelo === '32000') {
                 price.modelo = 'Zero Km';
               } else {
-                price.modelo = price.AnoModelo;
+                price.modelo = price.ano_modelo;
               }
-              price.valor_numerico = parseFloat(price.Valor.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
+              price.valor_numerico = parseFloat(price.preco.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
               desvaloriza.available_prices.push(price);
               desvaloriza.available_prices.sort(comparePrices);
               // TODO need to order results by YEAR

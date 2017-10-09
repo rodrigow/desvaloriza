@@ -17,11 +17,11 @@ describe('Desvaloriza Controller', function() {
   });
 
   it('should fetch all car makers', function() {
-    var url = 'https://fipe-parallelum.rhcloud.com/api/v1/carros/marcas';
+    var url = 'http://fipeapi.appspot.com/api/1/carros/marcas.json';
     var data = [
-      { "nome": "Acura", "codigo": 1 },
-      { "nome": "Agrale", "codigo": 2 },
-      { "nome": "Alfa Romeo", "codigo": 3 }
+      { "fipe_name": "Acura", "id": 1 },
+      { "fipe_name": "Agrale", "id": 2 },
+      { "fipe_name": "Alfa Romeo", "id": 3 }
     ];
 
     $httpBackend.whenGET(url).respond(data);

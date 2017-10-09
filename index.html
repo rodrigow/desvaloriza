@@ -13,6 +13,7 @@
 
 <div class="container" ng-controller="desvalorizaController as desvaloriza">
   <h1>Desvaloriza.com</h1>
+  <p>O sistema está com o um problema na ordenação dos anos. Será corrigido em breve.</p>
   <br/>
 
 
@@ -43,7 +44,7 @@
   <div class="form-group">
     <label for="maker">Marca:</label>
     <select id="maker" ng-model="desvaloriza.maker"
-      ng-options="maker.nome for maker in desvaloriza.available_makers | orderBy:'nome' track by maker.codigo"
+      ng-options="maker.fipe_name for maker in desvaloriza.available_makers | orderBy:'fipe_name' track by maker.id"
       ng-change="desvaloriza.loadModels()">
         <option value="">{{desvaloriza.makerOption}}</option>
     </select>
@@ -52,7 +53,7 @@
   <div class="form-group">
     <label for="model">Modelo:</label>
     <select id="model" ng-model="desvaloriza.model"
-      ng-options="model.nome for model in desvaloriza.available_models | orderBy:'nome' track by model.codigo"
+      ng-options="model.name for model in desvaloriza.available_models | orderBy:'name' track by model.id"
       ng-change="desvaloriza.loadPrices()">
         <option value="">{{desvaloriza.modelOption}}</option>
     </select>
