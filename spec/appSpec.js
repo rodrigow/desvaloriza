@@ -3,6 +3,7 @@ describe('Desvaloriza Controller', function() {
 
   // Set up the module
   beforeEach(module('DesvalorizaApp'));
+  // TODO need to add chart.js to the module list.
 
   beforeEach(inject(function($injector) {
     $httpBackend = $injector.get('$httpBackend');

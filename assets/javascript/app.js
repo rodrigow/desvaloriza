@@ -81,7 +81,6 @@
               price.valor_numerico = parseFloat(price.preco.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
               desvaloriza.available_prices.push(price);
               desvaloriza.available_prices.sort(comparePrices);
-              // TODO need to order results by YEAR
 
               desvaloriza.chart.data[0] = [];
               desvaloriza.chart.labels = [];
@@ -100,7 +99,7 @@
     }
 
     var comparePrices = function (a, b) {
-      return b.AnoModelo - a.AnoModelo;
+      return b.ano_modelo - a.ano_modelo;
     }
 
     var chartOptions = function (maker, model) {
