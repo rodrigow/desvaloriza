@@ -20,9 +20,9 @@ describe('Desvaloriza Controller', function() {
   it('should fetch all car makers', function() {
     var url = 'http://fipeapi.appspot.com/api/1/carros/marcas.json';
     var data = [
-      { "fipe_name": "Acura", "id": 1 },
-      { "fipe_name": "Agrale", "id": 2 },
-      { "fipe_name": "Alfa Romeo", "id": 3 }
+      { "nome": "Acura", "codigo": 1 },
+      { "nome": "Agrale", "codigo": 2 },
+      { "nome": "Alfa Romeo", "codigo": 3 }
     ];
 
     $httpBackend.whenGET(url).respond(data);

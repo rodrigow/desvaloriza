@@ -10,10 +10,10 @@
   desvalorizaApp.service('pricesService', pricesService);
 
   var url = {
-    makers: 'http://fipeapi.appspot.com/api/1/TYPE/marcas.json',
-    models: 'http://fipeapi.appspot.com/api/1/TYPE/veiculos/MAKER.json',
-    years: 'http://fipeapi.appspot.com/api/1/TYPE/veiculo/MAKER/MODEL.json',
-    prices: 'http://fipeapi.appspot.com/api/1/TYPE/veiculo/MAKER/MODEL/YEAR.json'
+    makers: 'https://parallelum.com.br/fipe/api/v1/TYPE/marcas',
+    models: 'https://parallelum.com.br/fipe/api/v1/TYPE/marcas/MAKER/modelos',
+    years: 'https://parallelum.com.br/fipe/api/v1/TYPE/marcas/MAKER/modelos/MODEL/anos',
+    prices: 'https://parallelum.com.br/fipe/api/v1/TYPE/marcas/MAKER/modelos/MODEL/anos/YEAR'
   };
 
   desvalorizaController.$inject = ['makersService', 'modelsService', 'yearsService', 'pricesService'];
@@ -50,9 +50,9 @@
       desvaloriza.chart = {};
       if (desvaloriza.maker) {
         desvaloriza.modelOption = loadingMessage();
-        modelsService.fetch(desvaloriza.type, desvaloriza.maker.id).then(function (response) {
+        modelsService.fetch(desvaloriza.type, desvaloriza.maker.codigo).then(function (response) {
           desvaloriza.modelOption = defaultModelOption();
-          desvaloriza.available_models = response.data;
+          desvaloriza.available_models = response.data.modelos;
         }, handleError);
       }
     }
@@ -66,26 +66,26 @@
         desvaloriza.chart = {};
         desvaloriza.chart.labels = [];
         desvaloriza.chart.data = [];
-        desvaloriza.chart.options = chartOptions(desvaloriza.maker.name, desvaloriza.model.name);
+        desvaloriza.chart.options = chartOptions(desvaloriza.maker.nome, desvaloriza.model.nome);
 
-        yearsService.fetch(desvaloriza.type, desvaloriza.maker.id, desvaloriza.model.id).then(function (response) {
+        yearsService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo).then(function (response) {
           for (var i = 0; i < response.data.length; i++) {
-            var year = response.data[i].id;
-            pricesService.fetch(desvaloriza.type, desvaloriza.maker.id, desvaloriza.model.id, year).then(function (response) {
-              var price = response.data;
-              if (price.ano_modelo === '32000') {
-                price.modelo = 'Zero Km';
+            var year = response.data[i].codigo;
+            pricesService.fetch(desvaloriza.type, desvaloriza.maker.codigo, desvaloriza.model.codigo, year).then(function (anoResponse) {
+              var price = anoResponse.data;
+              if (price.AnoModelo === 32000) {
+                price.ano = 'Zero Km';
               } else {
-                price.modelo = price.ano_modelo;
+                price.ano = price.AnoModelo;
               }
-              price.valor_numerico = parseFloat(price.preco.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
+              price.valor_numerico = parseFloat(price.Valor.replace(/\./g, '').replace(/\,/g, '.').replace('R$ ', ''));
               desvaloriza.available_prices.push(price);
               desvaloriza.available_prices.sort(comparePrices);
 
               desvaloriza.chart.data[0] = [];
               desvaloriza.chart.labels = [];
               for (var i = 0; i < desvaloriza.available_prices.length; i++) {
-                desvaloriza.chart.labels.push(desvaloriza.available_prices[i].modelo);
+                desvaloriza.chart.labels.push(desvaloriza.available_prices[i].ano);
                 desvaloriza.chart.data[0].push(desvaloriza.available_prices[i].valor_numerico);
               }
             }, handleError);
@@ -99,7 +99,7 @@
     }
 
     var comparePrices = function (a, b) {
-      return b.ano_modelo - a.ano_modelo;
+      return b.AnoModelo - a.AnoModelo;
     }
 
     var chartOptions = function (maker, model) {
